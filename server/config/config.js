@@ -27,7 +27,7 @@ if(process.env.NODE_ENV === 'dev'){
     urlDB = 'mongodb://localhost:27017/cafe'//direccion local
 } else{
     urlDB = process.env.MONGO_URI;//direccion de la nube. Se creo variable de entorno en hroku con el nombre MONG_URI
-    MONGO_URI //obligara que se inicie sesion en heroku, asi protegemos las credenciales en el repositorio publico github
+    //MONGO_URI //obligara que se inicie sesion en heroku, asi protegemos las credenciales en el repositorio publico github
 }
 
 process.env.URLDB = urlDB;
