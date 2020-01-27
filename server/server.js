@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-
 const bodyParser = require('body-parser');
 require('./config/config')
 
@@ -12,7 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(require('./routes/usuario'));
+//Configuracion global de rutas
+app.use(require('./routes/index'));
 
 
 // mongoose.connect('mongodb://localhost:27017/cafe',(err,res)=>{

@@ -3,8 +3,10 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
+const {verificaToken, verificaAdminRole} = require('../middlewares/autenticacion');
 
-app.get('/usuario', function (req, res) {//obtener registros
+//Middleware (verificaToken) se colocan como segundo argumento
+app.get('/usuario', verificaToken, (req, res) => {//obtener registros
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -37,7 +39,8 @@ app.get('/usuario', function (req, res) {//obtener registros
     })
 });
  
-app.post('/usuario', function (req, res) {//Guardar usuario
+//Se utiliza arreglo para mandar mas de un middleware
+app.post('/usuario', [verificaToken,verificaAdminRole], function (req, res) {//Guardar usuario
 
     let body = req.body;
 
@@ -68,7 +71,7 @@ app.post('/usuario', function (req, res) {//Guardar usuario
 
 });
 
-app.put('/usuario/:id', function (req, res) {//Actualizar usuario
+app.put('/usuario/:id', [verificaToken,verificaAdminRole], function (req, res) {//Actualizar usuario
     
     let id = req.params.id;
     //let body = req.body;
@@ -90,7 +93,7 @@ app.put('/usuario/:id', function (req, res) {//Actualizar usuario
 
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verificaToken,verificaAdminRole] , function (req, res) {
     
     let id = req.params.id;
     let cambiaEstado = {
