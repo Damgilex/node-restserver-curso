@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 require('./config/config')
-
+const path = require('path');//Paquete de Node por defecto
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -13,6 +13,9 @@ app.use(bodyParser.json())
 
 //Configuracion global de rutas
 app.use(require('./routes/index'));
+
+//Habilitar carpeta public
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 
 // mongoose.connect('mongodb://localhost:27017/cafe',(err,res)=>{
