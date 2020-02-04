@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
+
 const Usuario = require('../models/usuario');
 const {verificaToken, verificaAdminRole} = require('../middlewares/autenticacion');
 
@@ -15,7 +16,7 @@ app.get('/usuario', verificaToken, (req, res) => {//obtener registros
     limite = Number(limite);
 
     //Usuario.find({},'nombre email role') Podemos elegir que campos mostrar mandandolos entre comillas.
-    Usuario.find({estado:true},)//dentro de las llaves van las condiciones.
+    Usuario.find({estado:true})//dentro de las llaves van las condiciones.
     .skip(desde)//Se salta los primeros 5
     .limit(limite)//limita la cantidad de registros
     .exec((err,usuarios) => {
@@ -40,7 +41,7 @@ app.get('/usuario', verificaToken, (req, res) => {//obtener registros
 });
  
 //Se utiliza arreglo para mandar mas de un middleware
-app.post('/usuario', [verificaToken,verificaAdminRole], function (req, res) {//Guardar usuario
+app.post('/usuario', function (req, res) {//Guardar usuario
 
     let body = req.body;
 
@@ -66,9 +67,7 @@ app.post('/usuario', [verificaToken,verificaAdminRole], function (req, res) {//G
             ok:true,
             usuario:usuarioDB
         });
-
     });
-
 });
 
 app.put('/usuario/:id', [verificaToken,verificaAdminRole], function (req, res) {//Actualizar usuario
